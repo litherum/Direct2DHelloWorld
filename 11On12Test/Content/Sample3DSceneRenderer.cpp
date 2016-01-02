@@ -505,6 +505,8 @@ bool Sample3DSceneRenderer::Render()
 	m_deviceResources->GetD2DDeviceContext()->SetTarget(m_deviceResources->GetD2DRenderTarget());
 	m_deviceResources->GetD2DDeviceContext()->BeginDraw();
 	m_deviceResources->GetD2DDeviceContext()->SetTransform(D2D1::Matrix3x2F::Identity());
+	for (int i = 0; i < 1000; ++i)
+		m_deviceResources->GetD2DDeviceContext()->DrawLine(D2D1::Point2F(0 + 3 * i, 0), D2D1::Point2F(100 + 3 * i, 100), m_textBrush.Get());
 	//m_deviceResources->GetD2DDeviceContext()->DrawText(text, _countof(text) - 1, m_textFormat.Get(), &textRect, m_textBrush.Get());
 	ComPtr<IDWriteTextLayout> textLayout;
 	m_deviceResources->GetDWriteFactory()->CreateTextLayout(text, _countof(text) - 1, m_textFormat.Get(), FLT_MAX, FLT_MAX /*std::numeric_limits<FLOAT>::max(), std::numeric_limits<FLOAT>::max()*/, &textLayout);
@@ -512,7 +514,8 @@ bool Sample3DSceneRenderer::Render()
 	textLayout->GetMetrics(&metrics);
 	D2D1_POINT_2F centerOrigin = D2D1::Point2F((rtSize.width - metrics.width) / 2, (rtSize.height - metrics.height) / 2);
 	centerOrigin = D2D1::Point2F(centerOrigin.x + 100 * cos(m_angle * 4), centerOrigin.y + 100 * sin(m_angle * 2));
-	m_deviceResources->GetD2DDeviceContext()->DrawTextLayout(centerOrigin, textLayout.Get(), m_textBrush.Get());
+	for (int i = 0; i < 1000; ++i)
+		m_deviceResources->GetD2DDeviceContext()->DrawTextLayout(centerOrigin, textLayout.Get(), m_textBrush.Get());
 	DX::ThrowIfFailed(m_deviceResources->GetD2DDeviceContext()->EndDraw());
 	m_deviceResources->GetD2DDeviceContext()->SetTarget(nullptr);
 	m_deviceResources->GetD3D11On12Device()->ReleaseWrappedResources(resources, ARRAYSIZE(resources));
